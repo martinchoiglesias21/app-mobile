@@ -5,6 +5,7 @@ module.exports = {
   roots: ['<rootDir>/test'],
   testMatch: ['**/*.test.ts', '**/*.test.tsx'],
   setupFilesAfterEnv: ['<rootDir>/test/helpers/setup.ts'],
+  resolver: '<rootDir>/test/helpers/resolver.js',
   moduleNameMapper: {
     // Its "react-native" export is ESM (.mjs), which Jest cannot load; the
     // package also ships a CommonJS build.

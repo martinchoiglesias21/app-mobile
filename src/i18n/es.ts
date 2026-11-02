@@ -14,6 +14,8 @@ export const es = {
     /** «Venció hoy 13:00», only during that day. */
     expiredToday: (time: string) => `Venció hoy ${time}`,
     a11y: {
+      /** «el viernes a las 8 y 30»: the end, spoken, when it is 24 h or more away. */
+      untilDay: (weekday: string, time: string) => `el ${weekday} a ${time}`,
       /** «Llave del gas, verificado a las 21:43, vale hasta las 6.» `until` is spoken: «las 6». */
       verified: (name: string, time: string, until: string) =>
         `${name}, verificado a las ${time}, vale hasta ${until}.`,
@@ -27,6 +29,16 @@ export const es = {
       /** «Ver detalle de Llave del gas» */
       openDetail: (name: string) => `Ver detalle de ${name}`,
     },
+  },
+  /** Times as the screen reader says them. Special words only on the exact hour. */
+  spokenTime: {
+    midnight: 'medianoche',
+    noon: 'mediodía',
+    /** «la 1», «las 6», «las 13», «las 0» */
+    hour: (hour: number) => (hour === 1 ? 'la 1' : `las ${hour}`),
+    /** «las 6 y 30», «la 1 y 5» */
+    hourAndMinutes: (hour: number, minutes: number) =>
+      `${hour === 1 ? 'la 1' : `las ${hour}`} y ${minutes}`,
   },
   listDetail: {
     /** «2 de 4 verificados» */

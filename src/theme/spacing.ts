@@ -19,12 +19,20 @@ export const sizes = {
   /** Left strip of CheckRow that toggles the check. */
   checkZoneWidth: 64,
   checkSize: 32,
+  /** Between the circle and the name: the name and the divider start at 20 + 32 + 14 = 66. */
+  checkGap: 14,
+  /** Border of the pending circle. */
+  checkBorder: 2,
+  /** Stroke of the check mark, in points. */
+  checkStroke: 2.5,
   validityBarHeight: 3,
   /** Outlined buttons and field borders. */
   borderWidth: 1,
   /** Lucide icons: 24 pt, stroke 1.75. */
   icon: 24,
   iconStroke: 1.75,
+  /** Inline icons, such as the camera next to the check time. */
+  iconSmall: 18,
   buttonHeight: 52,
   /** Secondary text buttons such as «Ver historial». */
   buttonHeightCompact: 44,

@@ -60,6 +60,8 @@ Registro vivo de lo decidido sobre producto, UX, arquitectura y forma de trabajo
 | D-17 | **Permisos con contexto:** se piden recién cuando hacen falta, con una explicación antes. Si se niegan, se explica y se ofrece abrir los ajustes, sin insistir. | Respeto y mayor tasa de aceptación. |
 | D-18 | **Sin spinners:** los datos son locales; no hay spinners. Esqueletos solo si algo tarda más de 300 ms. | La app tiene que sentirse instantánea. |
 | D-19 | **Horas siempre en formato de 24 h con dos dígitos** («06:00», «21:43»), sin importar la configuración del teléfono (`Intl` con `hourCycle: 'h23'`). Los días abreviados van sin punto («hasta vie 08:30»). | La hora es la constancia: tiene que leerse igual siempre, en cualquier teléfono, y con cifras tabulares queda alineada. |
+| D-20 | **El fin de validez muestra el día solo si queda a 24 h o más.** Menos de 24 h: «hasta 06:00»; 24 h o más: «hasta vie 08:30». | Por debajo de 24 h la hora sola no se puede confundir con otra, y la fila queda más corta. |
+| D-21 | **El lector de pantalla dice las horas como se hablan:** «las 6», «la 1», «las 6 y 30», «medianoche» y «mediodía» (solo en la hora exacta), «las 13». Si el fin queda a 24 h o más, con el día completo: «vale hasta el viernes a las 8 y 30». | «06:00» leído dígito por dígito no se entiende al escucharlo; la abreviatura «vie» tampoco. |
 
 El detalle visual, los textos exactos y todos los estados por pantalla están en la especificación de diseño.
 
@@ -123,6 +125,10 @@ Decidido el 30 de octubre de 2026: **`StyleSheet` nativo de React Native + tema 
 - `opacity.busy`: 0,45. Botón mientras guarda: muestra el gerundio («Guardando…») y no acepta otro toque.
 - `type.subtitle`: 15/20, peso 400. Subtítulo de pantalla en `inkSecondary` («2 de 4 verificados»). «Todo verificado, último a las…» usa `type.label` en `accent`.
 - `type.metaStrong`: 14/19, peso 600. Metadato destacado en `accent` («Verificado a las 21:43»). «Pendiente» y «Venció hoy 13:00» usan `type.meta` en `inkSecondary`.
+- `sizes.checkGap`: 14. Espacio entre el círculo y el nombre: el nombre y el divisor empiezan en 66 (20 + 32 + 14). La zona táctil del círculo sigue siendo de 64.
+- `sizes.checkBorder`: 2, borde del círculo pendiente. `sizes.checkStroke`: 2,5, trazo del check.
+- `sizes.iconSmall`: 18. Íconos en línea con el texto, como la cámara junto a la hora del check.
+- `motion.duration.highlightFade`: 200. La fila recién verificada se tiñe de `accentSoft` al instante, lo mantiene 1,2 s y se va con este fundido (120 ms con reducir movimiento).
 
 **Patrón de pantalla (obligatorio):** toda pantalla se arma dentro de `Screen` (`components/ui`). `Screen` deja libre el área segura de arriba (barra de estado y Dynamic Island) pintada con `color.ground`, y el contenido se desplaza por debajo. Con `scroll` envuelve el contenido en un `ScrollView`; las listas usan `FlatList` dentro de un `Screen` sin `scroll`. Suma el margen inferior (barra del home) salvo con `bottomInset={false}`, que usan las pantallas con barra de pestañas. El encabezado (`ScreenHeader`) se desplaza junto con el contenido; en la fase 6 se evalúa una barra compacta al hacer scroll en listas largas.
 
@@ -280,3 +286,4 @@ Línea paralela opcional: base de `api` (NestJS, Postgres en Docker, endpoint de
 - [ ] Fase 2: reemplazar la redirección provisoria de `index.tsx` por las pestañas y mostrar los tres puntos del encabezado con su menú.
 - [ ] Fase 2: definir los tokens del toast (fondo invertido, texto y acción), que están en los mockups pero no en la página de Color de la especificación.
 - [ ] Fase 6: sumar el plugin de `expo-font` con el build de Android, para que la fuente quede incluida en la app compilada y esté disponible desde el primer instante, sin esperar la carga.
+- [ ] Fase 3: hacer tocable el nombre en `CheckRow` (`onOpen`, rol de botón y «Ver detalle de…»). En la fase 1 el nombre no es tocable, para no tener zonas que no respondan.

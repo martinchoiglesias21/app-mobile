@@ -10,6 +10,8 @@ export const motion = {
     toastVisible: 5000,
     /** Soft green tint on a just-verified row. */
     rowHighlight: 1200,
+    /** The row tint fades out after rowHighlight. */
+    highlightFade: 200,
     /** With reduce motion on, every animation becomes this fade. */
     reducedFade: 120,
     /** A second tap on the check within this window is ignored. */
