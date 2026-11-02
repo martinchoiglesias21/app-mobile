@@ -1,5 +1,6 @@
 export { darkColors, lightColors, type ColorTokens } from './colors';
 export { createStyles } from './createStyles';
+export { fontAssets } from './fonts';
 export { motion, type MotionTokens } from './motion';
 export { radius, type RadiusTokens } from './radius';
 export { sizes, spacing, type SizeTokens, type SpacingTokens } from './spacing';

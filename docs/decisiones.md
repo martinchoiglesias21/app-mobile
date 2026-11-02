@@ -118,6 +118,8 @@ Decidido el 30 de octubre de 2026: **`StyleSheet` nativo de React Native + tema 
 - `color.onAccent`: texto e íconos sobre un fondo `accent` relleno (botón principal, trazo del check). `#FFFFFF` en claro, `#121614` en oscuro.
 - `color.onDanger`: texto e íconos sobre un fondo `danger` relleno (botón destructivo del diálogo de confirmación). `#FFFFFF` en claro, `#121614` en oscuro.
 
+**Origen de la fuente:** repo [`googlefonts/atkinson-hyperlegible-next`](https://github.com/googlefonts/atkinson-hyperlegible-next), commit `7925f50`. Se usan los archivos estáticos de `fonts/ttf/`, uno por peso (Regular 400, Medium 500, SemiBold 600 y Bold 700), no la fuente variable `[wght].ttf`, porque React Native no distingue bien sus pesos, sobre todo en Android. Licencia SIL OFL 1.1, con `OFL.txt` en `assets/fonts/`. En la v1 se carga con `useFonts` al abrir la app, porque Expo Go no compila nada nuestro.
+
 ### Configuración
 
 Decidido el 2 de noviembre de 2026:
@@ -269,3 +271,4 @@ Línea paralela opcional: base de `api` (NestJS, Postgres en Docker, endpoint de
 - [ ] Fase 2: implementar el toast con «Deshacer» al desmarcar (D-03). En la fase 1 se desmarca directo porque los datos no se guardan.
 - [ ] Fase 2: reemplazar la redirección provisoria de `index.tsx` por las pestañas y mostrar los tres puntos del encabezado con su menú.
 - [ ] Fase 2: definir los tokens del toast (fondo invertido, texto y acción), que están en los mockups pero no en la página de Color de la especificación.
+- [ ] Fase 6: sumar el plugin de `expo-font` con el build de Android, para que la fuente quede incluida en la app compilada y esté disponible desde el primer instante, sin esperar la carga.
