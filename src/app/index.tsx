@@ -1,68 +1,9 @@
-import { Text, View } from 'react-native';
+import { Redirect } from 'expo-router';
 
-import { Button } from '@/components/ui/Button';
-import { Screen } from '@/components/ui/Screen';
-import { ScreenHeader } from '@/components/ui/ScreenHeader';
-import { createStyles, maxFontSizeMultiplier, tabularNums } from '@/theme';
+import { sampleListId } from '@/features/lists/sampleList';
 
-const noop = () => {};
-
-// Provisional: shows the safe area, the header, the font, tabular digits and
-// the Button variants on the phone. Replaced by the redirect to lists/sample
-// in step 10 of phase 1.
+// Provisional (phase 1): opens the sample list. Replaced by the tabs and the
+// Inicio screen in phase 2.
 export default function Index() {
-  const styles = useStyles();
-
-  return (
-    <Screen scroll>
-      <ScreenHeader title="Tilde" subtitle="2 de 4 verificados" />
-      <View style={styles.body}>
-        <Text style={styles.accent} maxFontSizeMultiplier={maxFontSizeMultiplier}>
-          Todo verificado, último a las 21:52
-        </Text>
-        <Text style={styles.item} maxFontSizeMultiplier={maxFontSizeMultiplier}>
-          Llave del gas
-        </Text>
-        <Text style={styles.verified} maxFontSizeMultiplier={maxFontSizeMultiplier}>
-          Verificado a las 21:43
-        </Text>
-        <Text style={styles.time} maxFontSizeMultiplier={maxFontSizeMultiplier}>
-          21:43
-        </Text>
-        <Text style={styles.time} maxFontSizeMultiplier={maxFontSizeMultiplier}>
-          11:11
-        </Text>
-        <Text style={styles.meta} maxFontSizeMultiplier={maxFontSizeMultiplier}>
-          1 l I · 0 O
-        </Text>
-
-        <View style={styles.buttons}>
-          <Button label="Verificar" onPress={noop} />
-          <Button label="Desmarcar" variant="secondary" onPress={noop} />
-          <Button label="Ver historial" variant="text" size="compact" onPress={noop} />
-          <Button label="Eliminar ítem" variant="destructive" onPress={noop} />
-          <Button label="Eliminar" variant="destructiveFilled" onPress={noop} />
-          <Button label="Verificar" busy onPress={noop} />
-          <Button label="Agregar ítem" variant="text" width="auto" onPress={noop} />
-        </View>
-      </View>
-    </Screen>
-  );
+  return <Redirect href={{ pathname: '/lists/[id]', params: { id: sampleListId } }} />;
 }
-
-const useStyles = createStyles((theme) => ({
-  body: {
-    gap: theme.spacing.xs,
-    paddingHorizontal: theme.sizes.screenMargin,
-    paddingBottom: theme.spacing.xxxl,
-  },
-  accent: { ...theme.typography.label, color: theme.colors.accent },
-  item: { ...theme.typography.item, color: theme.colors.ink },
-  verified: { ...theme.typography.metaStrong, ...tabularNums, color: theme.colors.accent },
-  time: { ...theme.typography.display, ...tabularNums, color: theme.colors.accent },
-  meta: { ...theme.typography.meta, color: theme.colors.inkSecondary },
-  buttons: {
-    gap: theme.spacing.sm,
-    marginTop: theme.spacing.xl,
-  },
-}));

@@ -287,3 +287,4 @@ Línea paralela opcional: base de `api` (NestJS, Postgres en Docker, endpoint de
 - [ ] Fase 2: definir los tokens del toast (fondo invertido, texto y acción), que están en los mockups pero no en la página de Color de la especificación.
 - [ ] Fase 6: sumar el plugin de `expo-font` con el build de Android, para que la fuente quede incluida en la app compilada y esté disponible desde el primer instante, sin esperar la carga.
 - [ ] Fase 3: hacer tocable el nombre en `CheckRow` (`onOpen`, rol de botón y «Ver detalle de…»). En la fase 1 el nombre no es tocable, para no tener zonas que no respondan.
+- [ ] Fase 2: sumar «Agregar ítem» y el estado vacío («Esta lista no tiene ítems», con `EmptyState`) en Detalle de lista. En la fase 1 no se muestran porque todavía no se pueden crear ítems.

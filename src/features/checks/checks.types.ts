@@ -1,3 +1,11 @@
+/** A stored verification. */
+export type Check = {
+  checkedAt: Date;
+  /** null: «Hasta que lo desmarque», never expires. */
+  expiresAt: Date | null;
+  hasPhoto: boolean;
+};
+
 /** What a CheckRow shows. Computed by the caller; the row never decides it. */
 export type CheckStatus =
   | { kind: 'pending' }

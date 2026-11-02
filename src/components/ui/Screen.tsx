@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -12,10 +12,21 @@ type ScreenProps = {
   bottomInset?: boolean;
 };
 
+const BottomInsetContext = createContext(0);
+
+/**
+ * Bottom padding for a list's content inside a non-scroll Screen, so the
+ * last row ends above the home indicator while the list scrolls beneath it.
+ */
+export function useScreenBottomInset(): number {
+  return useContext(BottomInsetContext);
+}
+
 /**
  * Container for every screen. Keeps the status bar and Dynamic Island zone
  * clear and painted with the ground color; content scrolls beneath it and is
- * clipped at its edge.
+ * clipped at its edge. At the bottom, content also scrolls beneath the home
+ * indicator and ends above it.
  */
 export function Screen({ children, scroll = false, bottomInset = true }: ScreenProps) {
   const styles = useStyles();
@@ -35,7 +46,9 @@ export function Screen({ children, scroll = false, bottomInset = true }: ScreenP
           {children}
         </ScrollView>
       ) : (
-        <View style={[styles.content, { paddingBottom }]}>{children}</View>
+        <BottomInsetContext.Provider value={paddingBottom}>
+          <View style={styles.content}>{children}</View>
+        </BottomInsetContext.Provider>
       )}
     </View>
   );

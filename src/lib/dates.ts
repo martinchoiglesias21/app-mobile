@@ -35,6 +35,20 @@ export function spokenTime(date: Date): string {
   return strings.spokenTime.hourAndMinutes(hour, minutes);
 }
 
+/** Same calendar day in the phone's local time. */
+export function isSameLocalDay(a: Date, b: Date): boolean {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+}
+
+/** 00:00 of the same local day. */
+export function startOfLocalDay(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
 const dayInMs = 24 * 60 * 60 * 1000;
 
 /** True when `date` is 24 h or more after `now`: then the day is shown next to the time. */
