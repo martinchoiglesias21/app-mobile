@@ -25,7 +25,9 @@ export type TypographyTokens = {
   item: TypeToken;
   /** 17/24, 400. Paragraphs, options, fields. */
   body: TypeToken;
-  /** 15/20, 600. Field labels, text buttons. */
+  /** 17/22, 600. Button labels (added in phase 1). */
+  button: TypeToken;
+  /** 15/20, 600. Field labels. */
   label: TypeToken;
   /** 14/19, 400. Row metadata, hints, field errors. */
   meta: TypeToken;
@@ -40,6 +42,7 @@ export const typography: TypographyTokens = {
   heading: { fontFamily: fontFamily.bold, fontSize: 22, lineHeight: 28 },
   item: { fontFamily: fontFamily.medium, fontSize: 17, lineHeight: 22 },
   body: { fontFamily: fontFamily.regular, fontSize: 17, lineHeight: 24 },
+  button: { fontFamily: fontFamily.semiBold, fontSize: 17, lineHeight: 22 },
   label: { fontFamily: fontFamily.semiBold, fontSize: 15, lineHeight: 20 },
   meta: { fontFamily: fontFamily.regular, fontSize: 14, lineHeight: 19 },
   caption: { fontFamily: fontFamily.semiBold, fontSize: 12, lineHeight: 16 },

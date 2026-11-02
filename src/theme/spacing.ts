@@ -20,7 +20,11 @@ export const sizes = {
   checkZoneWidth: 64,
   checkSize: 32,
   validityBarHeight: 3,
+  /** Outlined buttons and field borders. */
+  borderWidth: 1,
   buttonHeight: 52,
+  /** Secondary text buttons such as «Ver historial». */
+  buttonHeightCompact: 44,
   /** 44 × 44 on iOS, 48 × 48 on Android, even if the visible element is smaller. */
   minTouchTarget: Platform.select({ android: 48, default: 44 }),
 } as const;

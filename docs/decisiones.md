@@ -59,6 +59,7 @@ Registro vivo de lo decidido sobre producto, UX, arquitectura y forma de trabajo
 | D-16 | **Sin cuenta en la v1.** En la v2 será opcional y se ofrecerá desde Ajustes. | Cero fricción al empezar. |
 | D-17 | **Permisos con contexto:** se piden recién cuando hacen falta, con una explicación antes. Si se niegan, se explica y se ofrece abrir los ajustes, sin insistir. | Respeto y mayor tasa de aceptación. |
 | D-18 | **Sin spinners:** los datos son locales; no hay spinners. Esqueletos solo si algo tarda más de 300 ms. | La app tiene que sentirse instantánea. |
+| D-19 | **Horas siempre en formato de 24 h con dos dígitos** («06:00», «21:43»), sin importar la configuración del teléfono (`Intl` con `hourCycle: 'h23'`). Los días abreviados van sin punto («hasta vie 08:30»). | La hora es la constancia: tiene que leerse igual siempre, en cualquier teléfono, y con cifras tabulares queda alineada. |
 
 El detalle visual, los textos exactos y todos los estados por pantalla están en la especificación de diseño.
 
@@ -117,6 +118,9 @@ Decidido el 30 de octubre de 2026: **`StyleSheet` nativo de React Native + tema 
 - `color.scrim`: velo detrás de paneles y diálogos. `rgba(16, 22, 19, 0.36)` en claro, `rgba(0, 0, 0, 0.55)` en oscuro.
 - `color.onAccent`: texto e íconos sobre un fondo `accent` relleno (botón principal, trazo del check). `#FFFFFF` en claro, `#121614` en oscuro.
 - `color.onDanger`: texto e íconos sobre un fondo `danger` relleno (botón destructivo del diálogo de confirmación). `#FFFFFF` en claro, `#121614` en oscuro.
+- `type.button`: 17/22, peso 600. Texto de todos los botones. `type.label` (15/20) queda para las etiquetas de campo.
+- `opacity.pressed`: 0,85. Botones rellenos (`primary` y `destructiveFilled`) mientras se presionan; el resto usa el fondo `color.pressed`.
+- `opacity.busy`: 0,45. Botón mientras guarda: muestra el gerundio («Guardando…») y no acepta otro toque.
 
 **Origen de la fuente:** repo [`googlefonts/atkinson-hyperlegible-next`](https://github.com/googlefonts/atkinson-hyperlegible-next), commit `7925f50`. Se usan los archivos estáticos de `fonts/ttf/`, uno por peso (Regular 400, Medium 500, SemiBold 600 y Bold 700), no la fuente variable `[wght].ttf`, porque React Native no distingue bien sus pesos, sobre todo en Android. Licencia SIL OFL 1.1, con `OFL.txt` en `assets/fonts/`. En la v1 se carga con `useFonts` al abrir la app, porque Expo Go no compila nada nuestro.
 

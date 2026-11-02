@@ -1,5 +1,6 @@
 import { darkColors, lightColors, type ColorTokens } from './colors';
 import { motion, type MotionTokens } from './motion';
+import { opacity, type OpacityTokens } from './opacity';
 import { radius, type RadiusTokens } from './radius';
 import { sizes, spacing, type SizeTokens, type SpacingTokens } from './spacing';
 import { typography, type TypographyTokens } from './typography';
@@ -13,10 +14,11 @@ export type Theme = {
   spacing: SpacingTokens;
   sizes: SizeTokens;
   radius: RadiusTokens;
+  opacity: OpacityTokens;
   motion: MotionTokens;
 };
 
-const shared = { typography, spacing, sizes, radius, motion };
+const shared = { typography, spacing, sizes, radius, opacity, motion };
 
 export const lightTheme: Theme = { mode: 'light', colors: lightColors, ...shared };
 export const darkTheme: Theme = { mode: 'dark', colors: darkColors, ...shared };
