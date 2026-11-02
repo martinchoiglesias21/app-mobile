@@ -2,7 +2,7 @@
 
 Registro vivo de lo decidido sobre producto, UX, arquitectura y forma de trabajo. Cada decisión tiene su motivo. Si algo cambia, se actualiza acá con la fecha y el porqué; no se cambia en silencio en el código.
 
-- Última actualización: 30 de octubre de 2026
+- Última actualización: 2 de noviembre de 2026
 - Especificación de diseño: `docs/design/tilde-especificacion-diseno-v1.pdf`
 
 ---
@@ -111,6 +111,22 @@ Decidido el 30 de octubre de 2026: **`StyleSheet` nativo de React Native + tema 
 
 **Descartadas:** NativeWind (Tailwind para React Native) y librerías de design system (Unistyles, Tamagui, Restyle).
 
+**Tokens agregados en la fase 1** (2 de noviembre de 2026), que no estaban en la especificación:
+
+- `color.pressed`: fondo de una superficie tocable mientras el dedo está apoyado. `#E8EBE6` en claro, `#232925` en oscuro.
+- `color.scrim`: velo detrás de paneles y diálogos. `rgba(16, 22, 19, 0.36)` en claro, `rgba(0, 0, 0, 0.55)` en oscuro.
+
+### Configuración
+
+Decidido el 2 de noviembre de 2026:
+
+- **React Compiler activado** (`experiments.reactCompiler` en `app.json`). Memoiza automáticamente al compilar, así que no se escriben `useMemo`, `useCallback` ni `memo` a mano salvo un problema medido. Con el compilador activo, los shared values de Reanimated se usan con `.get()` y `.set()`, nunca con `.value`.
+- **La web no es un destino:** sin `react-native-web` ni archivos `.web.tsx`.
+- **`react-dom` se mantiene como dependencia** porque Expo Router lo requiere internamente. No se importa en el código ni entra en el bundle de iOS y Android. Su versión la controla el SDK (`npx expo install`) y no se modifica a mano.
+- **Finales de línea LF en todo el repo**, definidos por `.gitattributes`.
+- **Dependencias con `npx expo install`** cuando el paquete lo soporte, para que las versiones sean las compatibles con el SDK.
+- **Prettier no formatea los `.md`** (`.prettierignore`): se editan a mano y solo a pedido.
+
 ### Backend (v2)
 
 - **NestJS + PostgreSQL** (Postgres en Docker para desarrollo).
@@ -130,14 +146,23 @@ Decidido el 30 de octubre de 2026: **`StyleSheet` nativo de React Native + tema 
 | ESLint, Prettier | Calidad de código | 1 | Aprobada |
 | `StyleSheet` nativo + tema propio | Estilos, sin librería | 1 | Aprobada |
 | `expo-font` | Tipografía Atkinson Hyperlegible Next, incluida como archivo | 1 | Viene con Expo |
-| `expo-haptics` | Vibración al marcar | 1 | A confirmar |
-| `react-native-svg`, `lucide-react-native` | Íconos | 1 | A confirmar |
+| `expo-splash-screen` | Mantener la pantalla de carga hasta que la fuente esté lista | 1 | Aprobada |
+| `expo-system-ui` | Fondo nativo según el tema; necesaria para `userInterfaceStyle: "automatic"` en Android | 1 | Aprobada |
+| `expo-haptics` | Vibración al marcar | 1 | Aprobada |
+| `react-native-svg`, `lucide-react-native` | Íconos | 1 | Aprobada |
+| `eslint-config-prettier` | Apaga las reglas de ESLint que chocan con Prettier | 1 | Aprobada |
+| `react-native-reanimated` | Animaciones en el hilo nativo (llenado y trazo del check) | 1 | Viene con Expo, aprobada |
+| `react-native-worklets` | Requerida por Reanimated 4 | 1 | Aprobada |
 | `expo-sqlite`, `drizzle-orm` | Base local | 2 | A confirmar |
 | `react-hook-form`, `zod` | Formularios y validación | 2 | A confirmar |
 | Lista arrastrable | Ordenar ítems | 2 | A evaluar |
 | Panel inferior | Sheets con gesto (librería o propio con Reanimated) | 3 | A evaluar |
+| `react-native-gesture-handler` | Gestos del panel inferior | 3 | A evaluar |
 | `expo-image-picker` | Foto opcional | 4 | A confirmar |
+| `expo-image` | Mostrar las fotos (miniaturas, comprobante, foto ampliada) | 4 | A evaluar |
 | `expo-notifications` | Avisos | 5 | A confirmar |
+
+**SDK de Expo:** 58, compatible con Expo Go 58.0.5 de la App Store (confirmado en el iPhone el 2 de noviembre de 2026). Antes de actualizar el SDK, verificar que la App Store ya tenga el Expo Go correspondiente.
 
 ---
 
@@ -239,3 +264,5 @@ Línea paralela opcional: base de `api` (NestJS, Postgres en Docker, endpoint de
 - [ ] Elegir ORM y validación del backend (al arrancar `api`).
 - [ ] Revisar la opción A del check compartido con feedback de testers.
 - [ ] Verificar que no exista otra app llamada «Tilde» en las tiendas antes de publicar.
+- [ ] Fase 2: implementar el toast con «Deshacer» al desmarcar (D-03). En la fase 1 se desmarca directo porque los datos no se guardan.
+- [ ] Fase 2: reemplazar la redirección provisoria de `index.tsx` por las pestañas y mostrar los tres puntos del encabezado con su menú.

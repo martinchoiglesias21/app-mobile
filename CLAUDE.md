@@ -111,7 +111,8 @@ Nunca solo el camino feliz. Cada pantalla contempla carga, vacío, éxito, error
 ## Performance
 
 - Listas con `FlatList` (o equivalente virtualizado), nunca `map` sobre listas largas.
-- Evitar renders innecesarios; memoizar solo donde se mida un problema.
+- Evitar renders innecesarios. El React Compiler está activado: no se escriben `useMemo`, `useCallback` ni `memo` a mano salvo un problema medido.
+- Con el React Compiler, los shared values de Reanimated se usan con `.get()` y `.set()`, nunca con `.value`.
 - Animaciones en el hilo nativo (Reanimated, que viene con Expo).
 
 ## Testing
