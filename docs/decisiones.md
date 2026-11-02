@@ -241,7 +241,8 @@ api/
 - **Ramas:** solo `feature/` y `fix/`, nombre en inglés: `feature/phase-1-base`, `fix/check-animation`. `main` siempre funciona.
 - **Commits:** en español y simples («Diseño base, primeros componentes», «Fix de alerta de vencimiento»). Se proponen y se confirman antes de hacerlos.
 - **Pull requests:** uno por fase o tarea, aunque se trabaje solo.
-- **CI:** GitHub Action en cada PR con linter, chequeo de tipos y tests.
+- **CI:** GitHub Action en cada PR con linter, chequeo de tipos, formato y tests.
+- **Accesibilidad:** se implementa en cada paso y se cubre con tests automáticos (roles, estados y textos del lector de pantalla). La prueba manual con tecnologías de asistencia (VoiceOver, TalkBack) se hace en una sola ronda en la fase 6; en los pasos intermedios no se pide. El texto grande y reducir movimiento sí se prueban en el teléfono cuando un paso los afecta.
 - **Repos:** privados en GitHub, creados por el dueño del proyecto; Claude Code opera sobre ellos con su confirmación.
 - **Decisiones:** se discuten en el chat de decisiones y se registran en este archivo. Si en el código aparece una decisión que afecta a otras partes, se frena y se consulta.
 
@@ -288,3 +289,4 @@ Línea paralela opcional: base de `api` (NestJS, Postgres en Docker, endpoint de
 - [ ] Fase 6: sumar el plugin de `expo-font` con el build de Android, para que la fuente quede incluida en la app compilada y esté disponible desde el primer instante, sin esperar la carga.
 - [ ] Fase 3: hacer tocable el nombre en `CheckRow` (`onOpen`, rol de botón y «Ver detalle de…»). En la fase 1 el nombre no es tocable, para no tener zonas que no respondan.
 - [ ] Fase 2: sumar «Agregar ítem» y el estado vacío («Esta lista no tiene ítems», con `EmptyState`) en Detalle de lista. En la fase 1 no se muestran porque todavía no se pueden crear ítems.
+- [ ] Fase 3: al verificar, usar la validez predeterminada de cada ítem, no la validez fija de la fase 1 («hasta mañana 06:00»). En el ejemplo, «Alarma puesta» tiene que volver a «sin vencimiento» al verificarla de nuevo.
