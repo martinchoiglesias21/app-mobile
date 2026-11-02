@@ -121,6 +121,10 @@ Decidido el 30 de octubre de 2026: **`StyleSheet` nativo de React Native + tema 
 - `type.button`: 17/22, peso 600. Texto de todos los botones. `type.label` (15/20) queda para las etiquetas de campo.
 - `opacity.pressed`: 0,85. Botones rellenos (`primary` y `destructiveFilled`) mientras se presionan; el resto usa el fondo `color.pressed`.
 - `opacity.busy`: 0,45. Botón mientras guarda: muestra el gerundio («Guardando…») y no acepta otro toque.
+- `type.subtitle`: 15/20, peso 400. Subtítulo de pantalla en `inkSecondary` («2 de 4 verificados»). «Todo verificado, último a las…» usa `type.label` en `accent`.
+- `type.metaStrong`: 14/19, peso 600. Metadato destacado en `accent` («Verificado a las 21:43»). «Pendiente» y «Venció hoy 13:00» usan `type.meta` en `inkSecondary`.
+
+**Patrón de pantalla (obligatorio):** toda pantalla se arma dentro de `Screen` (`components/ui`). `Screen` deja libre el área segura de arriba (barra de estado y Dynamic Island) pintada con `color.ground`, y el contenido se desplaza por debajo. Con `scroll` envuelve el contenido en un `ScrollView`; las listas usan `FlatList` dentro de un `Screen` sin `scroll`. Suma el margen inferior (barra del home) salvo con `bottomInset={false}`, que usan las pantallas con barra de pestañas. El encabezado (`ScreenHeader`) se desplaza junto con el contenido; en la fase 6 se evalúa una barra compacta al hacer scroll en listas largas.
 
 **Origen de la fuente:** repo [`googlefonts/atkinson-hyperlegible-next`](https://github.com/googlefonts/atkinson-hyperlegible-next), commit `7925f50`. Se usan los archivos estáticos de `fonts/ttf/`, uno por peso (Regular 400, Medium 500, SemiBold 600 y Bold 700), no la fuente variable `[wght].ttf`, porque React Native no distingue bien sus pesos, sobre todo en Android. Licencia SIL OFL 1.1, con `OFL.txt` en `assets/fonts/`. En la v1 se carga con `useFonts` al abrir la app, porque Expo Go no compila nada nuestro.
 

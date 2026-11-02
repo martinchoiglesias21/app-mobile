@@ -22,6 +22,9 @@ export const sizes = {
   validityBarHeight: 3,
   /** Outlined buttons and field borders. */
   borderWidth: 1,
+  /** Lucide icons: 24 pt, stroke 1.75. */
+  icon: 24,
+  iconStroke: 1.75,
   buttonHeight: 52,
   /** Secondary text buttons such as «Ver historial». */
   buttonHeightCompact: 44,

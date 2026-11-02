@@ -27,10 +27,14 @@ export type TypographyTokens = {
   body: TypeToken;
   /** 17/22, 600. Button labels (added in phase 1). */
   button: TypeToken;
+  /** 15/20, 400. Screen subtitle, such as «2 de 4 verificados» (added in phase 1). */
+  subtitle: TypeToken;
   /** 15/20, 600. Field labels. */
   label: TypeToken;
   /** 14/19, 400. Row metadata, hints, field errors. */
   meta: TypeToken;
+  /** 14/19, 600. Emphasized metadata: «Verificado a las 21:43» (added in phase 1). */
+  metaStrong: TypeToken;
   /** 12/16, 600. Tab bar labels and badges. Absolute minimum. */
   caption: TypeToken;
 };
@@ -43,8 +47,10 @@ export const typography: TypographyTokens = {
   item: { fontFamily: fontFamily.medium, fontSize: 17, lineHeight: 22 },
   body: { fontFamily: fontFamily.regular, fontSize: 17, lineHeight: 24 },
   button: { fontFamily: fontFamily.semiBold, fontSize: 17, lineHeight: 22 },
+  subtitle: { fontFamily: fontFamily.regular, fontSize: 15, lineHeight: 20 },
   label: { fontFamily: fontFamily.semiBold, fontSize: 15, lineHeight: 20 },
   meta: { fontFamily: fontFamily.regular, fontSize: 14, lineHeight: 19 },
+  metaStrong: { fontFamily: fontFamily.semiBold, fontSize: 14, lineHeight: 19 },
   caption: { fontFamily: fontFamily.semiBold, fontSize: 12, lineHeight: 16 },
 };
 
