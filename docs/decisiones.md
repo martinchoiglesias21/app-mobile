@@ -115,6 +115,8 @@ Decidido el 30 de octubre de 2026: **`StyleSheet` nativo de React Native + tema 
 
 - `color.pressed`: fondo de una superficie tocable mientras el dedo está apoyado. `#E8EBE6` en claro, `#232925` en oscuro.
 - `color.scrim`: velo detrás de paneles y diálogos. `rgba(16, 22, 19, 0.36)` en claro, `rgba(0, 0, 0, 0.55)` en oscuro.
+- `color.onAccent`: texto e íconos sobre un fondo `accent` relleno (botón principal, trazo del check). `#FFFFFF` en claro, `#121614` en oscuro.
+- `color.onDanger`: texto e íconos sobre un fondo `danger` relleno (botón destructivo del diálogo de confirmación). `#FFFFFF` en claro, `#121614` en oscuro.
 
 ### Configuración
 
@@ -266,3 +268,4 @@ Línea paralela opcional: base de `api` (NestJS, Postgres en Docker, endpoint de
 - [ ] Verificar que no exista otra app llamada «Tilde» en las tiendas antes de publicar.
 - [ ] Fase 2: implementar el toast con «Deshacer» al desmarcar (D-03). En la fase 1 se desmarca directo porque los datos no se guardan.
 - [ ] Fase 2: reemplazar la redirección provisoria de `index.tsx` por las pestañas y mostrar los tres puntos del encabezado con su menú.
+- [ ] Fase 2: definir los tokens del toast (fondo invertido, texto y acción), que están en los mockups pero no en la página de Color de la especificación.

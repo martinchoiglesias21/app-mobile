@@ -1,0 +1,29 @@
+import { Platform } from 'react-native';
+
+// Base-4 scale from the design spec.
+export const spacing = {
+  xxs: 4,
+  xs: 8,
+  sm: 12,
+  md: 16,
+  lg: 20,
+  xl: 24,
+  xxl: 32,
+  xxxl: 48,
+} as const;
+
+// Fixed measures from the design spec.
+export const sizes = {
+  screenMargin: 20,
+  rowMinHeight: 72,
+  /** Left strip of CheckRow that toggles the check. */
+  checkZoneWidth: 64,
+  checkSize: 32,
+  validityBarHeight: 3,
+  buttonHeight: 52,
+  /** 44 × 44 on iOS, 48 × 48 on Android, even if the visible element is smaller. */
+  minTouchTarget: Platform.select({ android: 48, default: 44 }),
+} as const;
+
+export type SpacingTokens = typeof spacing;
+export type SizeTokens = typeof sizes;

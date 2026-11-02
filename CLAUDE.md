@@ -126,6 +126,7 @@ Nunca solo el camino feliz. Cada pantalla contempla carga, vacío, éxito, error
 
 - Ramas: `feature/<nombre-en-ingles>` o `fix/<nombre-en-ingles>`. Nunca trabajar directo sobre `main`.
 - Commits en español, simples y descriptivos: «Diseño base, primeros componentes», «Fix de alerta de vencimiento». Proponé el mensaje y esperá confirmación.
+- Los commits y los PR no llevan la línea Co-Authored-By ni ninguna firma de Claude.
 - Un PR por tarea o fase, con descripción de qué cambia y cómo probarlo.
 - La GitHub Action corre linter, tipos y tests en cada PR.
 
