@@ -2,7 +2,7 @@
 
 Registro vivo de lo decidido sobre producto, UX, arquitectura y forma de trabajo. Cada decisión tiene su motivo. Si algo cambia, se actualiza acá con la fecha y el porqué; no se cambia en silencio en el código.
 
-- Última actualización: 30 de octubre de 2026
+- Última actualización: 2 de noviembre de 2026
 - Especificación de diseño: `docs/design/tilde-especificacion-diseno-v1.pdf`
 
 ---
@@ -59,6 +59,9 @@ Registro vivo de lo decidido sobre producto, UX, arquitectura y forma de trabajo
 | D-16 | **Sin cuenta en la v1.** En la v2 será opcional y se ofrecerá desde Ajustes. | Cero fricción al empezar. |
 | D-17 | **Permisos con contexto:** se piden recién cuando hacen falta, con una explicación antes. Si se niegan, se explica y se ofrece abrir los ajustes, sin insistir. | Respeto y mayor tasa de aceptación. |
 | D-18 | **Sin spinners:** los datos son locales; no hay spinners. Esqueletos solo si algo tarda más de 300 ms. | La app tiene que sentirse instantánea. |
+| D-19 | **Horas siempre en formato de 24 h con dos dígitos** («06:00», «21:43»), sin importar la configuración del teléfono (`Intl` con `hourCycle: 'h23'`). Los días abreviados van sin punto («hasta vie 08:30»). | La hora es la constancia: tiene que leerse igual siempre, en cualquier teléfono, y con cifras tabulares queda alineada. |
+| D-20 | **El fin de validez muestra el día solo si queda a 24 h o más.** Menos de 24 h: «hasta 06:00»; 24 h o más: «hasta vie 08:30». | Por debajo de 24 h la hora sola no se puede confundir con otra, y la fila queda más corta. |
+| D-21 | **El lector de pantalla dice las horas como se hablan:** «las 6», «la 1», «las 6 y 30», «medianoche» y «mediodía» (solo en la hora exacta), «las 13». Si el fin queda a 24 h o más, con el día completo: «vale hasta el viernes a las 8 y 30». | «06:00» leído dígito por dígito no se entiende al escucharlo; la abreviatura «vie» tampoco. |
 
 El detalle visual, los textos exactos y todos los estados por pantalla están en la especificación de diseño.
 
@@ -111,6 +114,37 @@ Decidido el 30 de octubre de 2026: **`StyleSheet` nativo de React Native + tema 
 
 **Descartadas:** NativeWind (Tailwind para React Native) y librerías de design system (Unistyles, Tamagui, Restyle).
 
+**Tokens agregados en la fase 1** (2 de noviembre de 2026), que no estaban en la especificación:
+
+- `color.pressed`: fondo de una superficie tocable mientras el dedo está apoyado. `#E8EBE6` en claro, `#232925` en oscuro.
+- `color.scrim`: velo detrás de paneles y diálogos. `rgba(16, 22, 19, 0.36)` en claro, `rgba(0, 0, 0, 0.55)` en oscuro.
+- `color.onAccent`: texto e íconos sobre un fondo `accent` relleno (botón principal, trazo del check). `#FFFFFF` en claro, `#121614` en oscuro.
+- `color.onDanger`: texto e íconos sobre un fondo `danger` relleno (botón destructivo del diálogo de confirmación). `#FFFFFF` en claro, `#121614` en oscuro.
+- `type.button`: 17/22, peso 600. Texto de todos los botones. `type.label` (15/20) queda para las etiquetas de campo.
+- `opacity.pressed`: 0,85. Botones rellenos (`primary` y `destructiveFilled`) mientras se presionan; el resto usa el fondo `color.pressed`.
+- `opacity.busy`: 0,45. Botón mientras guarda: muestra el gerundio («Guardando…») y no acepta otro toque.
+- `type.subtitle`: 15/20, peso 400. Subtítulo de pantalla en `inkSecondary` («2 de 4 verificados»). «Todo verificado, último a las…» usa `type.label` en `accent`.
+- `type.metaStrong`: 14/19, peso 600. Metadato destacado en `accent` («Verificado a las 21:43»). «Pendiente» y «Venció hoy 13:00» usan `type.meta` en `inkSecondary`.
+- `sizes.checkGap`: 14. Espacio entre el círculo y el nombre: el nombre y el divisor empiezan en 66 (20 + 32 + 14). La zona táctil del círculo sigue siendo de 64.
+- `sizes.checkBorder`: 2, borde del círculo pendiente. `sizes.checkStroke`: 2,5, trazo del check.
+- `sizes.iconSmall`: 18. Íconos en línea con el texto, como la cámara junto a la hora del check.
+- `motion.duration.highlightFade`: 200. La fila recién verificada se tiñe de `accentSoft` al instante, lo mantiene 1,2 s y se va con este fundido (120 ms con reducir movimiento).
+
+**Patrón de pantalla (obligatorio):** toda pantalla se arma dentro de `Screen` (`components/ui`). `Screen` deja libre el área segura de arriba (barra de estado y Dynamic Island) pintada con `color.ground`, y el contenido se desplaza por debajo. Con `scroll` envuelve el contenido en un `ScrollView`; las listas usan `FlatList` dentro de un `Screen` sin `scroll`. Suma el margen inferior (barra del home) salvo con `bottomInset={false}`, que usan las pantallas con barra de pestañas. El encabezado (`ScreenHeader`) se desplaza junto con el contenido; en la fase 6 se evalúa una barra compacta al hacer scroll en listas largas.
+
+**Origen de la fuente:** repo [`googlefonts/atkinson-hyperlegible-next`](https://github.com/googlefonts/atkinson-hyperlegible-next), commit `7925f50`. Se usan los archivos estáticos de `fonts/ttf/`, uno por peso (Regular 400, Medium 500, SemiBold 600 y Bold 700), no la fuente variable `[wght].ttf`, porque React Native no distingue bien sus pesos, sobre todo en Android. Licencia SIL OFL 1.1, con `OFL.txt` en `assets/fonts/`. En la v1 se carga con `useFonts` al abrir la app, porque Expo Go no compila nada nuestro.
+
+### Configuración
+
+Decidido el 2 de noviembre de 2026:
+
+- **React Compiler activado** (`experiments.reactCompiler` en `app.json`). Memoiza automáticamente al compilar, así que no se escriben `useMemo`, `useCallback` ni `memo` a mano salvo un problema medido. Con el compilador activo, los shared values de Reanimated se usan con `.get()` y `.set()`, nunca con `.value`.
+- **La web no es un destino:** sin `react-native-web` ni archivos `.web.tsx`.
+- **`react-dom` se mantiene como dependencia** porque Expo Router lo requiere internamente. No se importa en el código ni entra en el bundle de iOS y Android. Su versión la controla el SDK (`npx expo install`) y no se modifica a mano.
+- **Finales de línea LF en todo el repo**, definidos por `.gitattributes`.
+- **Dependencias con `npx expo install`** cuando el paquete lo soporte, para que las versiones sean las compatibles con el SDK.
+- **Prettier no formatea los `.md`** (`.prettierignore`): se editan a mano y solo a pedido.
+
 ### Backend (v2)
 
 - **NestJS + PostgreSQL** (Postgres en Docker para desarrollo).
@@ -130,14 +164,23 @@ Decidido el 30 de octubre de 2026: **`StyleSheet` nativo de React Native + tema 
 | ESLint, Prettier | Calidad de código | 1 | Aprobada |
 | `StyleSheet` nativo + tema propio | Estilos, sin librería | 1 | Aprobada |
 | `expo-font` | Tipografía Atkinson Hyperlegible Next, incluida como archivo | 1 | Viene con Expo |
-| `expo-haptics` | Vibración al marcar | 1 | A confirmar |
-| `react-native-svg`, `lucide-react-native` | Íconos | 1 | A confirmar |
+| `expo-splash-screen` | Mantener la pantalla de carga hasta que la fuente esté lista | 1 | Aprobada |
+| `expo-system-ui` | Fondo nativo según el tema; necesaria para `userInterfaceStyle: "automatic"` en Android | 1 | Aprobada |
+| `expo-haptics` | Vibración al marcar | 1 | Aprobada |
+| `react-native-svg`, `lucide-react-native` | Íconos | 1 | Aprobada |
+| `eslint-config-prettier` | Apaga las reglas de ESLint que chocan con Prettier | 1 | Aprobada |
+| `react-native-reanimated` | Animaciones en el hilo nativo (llenado y trazo del check) | 1 | Viene con Expo, aprobada |
+| `react-native-worklets` | Requerida por Reanimated 4 | 1 | Aprobada |
 | `expo-sqlite`, `drizzle-orm` | Base local | 2 | A confirmar |
 | `react-hook-form`, `zod` | Formularios y validación | 2 | A confirmar |
 | Lista arrastrable | Ordenar ítems | 2 | A evaluar |
 | Panel inferior | Sheets con gesto (librería o propio con Reanimated) | 3 | A evaluar |
+| `react-native-gesture-handler` | Gestos del panel inferior | 3 | A evaluar |
 | `expo-image-picker` | Foto opcional | 4 | A confirmar |
+| `expo-image` | Mostrar las fotos (miniaturas, comprobante, foto ampliada) | 4 | A evaluar |
 | `expo-notifications` | Avisos | 5 | A confirmar |
+
+**SDK de Expo:** 58, compatible con Expo Go 58.0.5 de la App Store (confirmado en el iPhone el 2 de noviembre de 2026). Antes de actualizar el SDK, verificar que la App Store ya tenga el Expo Go correspondiente.
 
 ---
 
@@ -198,7 +241,8 @@ api/
 - **Ramas:** solo `feature/` y `fix/`, nombre en inglés: `feature/phase-1-base`, `fix/check-animation`. `main` siempre funciona.
 - **Commits:** en español y simples («Diseño base, primeros componentes», «Fix de alerta de vencimiento»). Se proponen y se confirman antes de hacerlos.
 - **Pull requests:** uno por fase o tarea, aunque se trabaje solo.
-- **CI:** GitHub Action en cada PR con linter, chequeo de tipos y tests.
+- **CI:** GitHub Action en cada PR con linter, chequeo de tipos, formato y tests.
+- **Accesibilidad:** se implementa en cada paso y se cubre con tests automáticos (roles, estados y textos del lector de pantalla). La prueba manual con tecnologías de asistencia (VoiceOver, TalkBack) se hace en una sola ronda en la fase 6; en los pasos intermedios no se pide. El texto grande y reducir movimiento sí se prueban en el teléfono cuando un paso los afecta.
 - **Repos:** privados en GitHub, creados por el dueño del proyecto; Claude Code opera sobre ellos con su confirmación.
 - **Decisiones:** se discuten en el chat de decisiones y se registran en este archivo. Si en el código aparece una decisión que afecta a otras partes, se frena y se consulta.
 
@@ -239,3 +283,10 @@ Línea paralela opcional: base de `api` (NestJS, Postgres en Docker, endpoint de
 - [ ] Elegir ORM y validación del backend (al arrancar `api`).
 - [ ] Revisar la opción A del check compartido con feedback de testers.
 - [ ] Verificar que no exista otra app llamada «Tilde» en las tiendas antes de publicar.
+- [ ] Fase 2: implementar el toast con «Deshacer» al desmarcar (D-03). En la fase 1 se desmarca directo porque los datos no se guardan.
+- [ ] Fase 2: reemplazar la redirección provisoria de `index.tsx` por las pestañas y mostrar los tres puntos del encabezado con su menú.
+- [ ] Fase 2: definir los tokens del toast (fondo invertido, texto y acción), que están en los mockups pero no en la página de Color de la especificación.
+- [ ] Fase 6: sumar el plugin de `expo-font` con el build de Android, para que la fuente quede incluida en la app compilada y esté disponible desde el primer instante, sin esperar la carga.
+- [ ] Fase 3: hacer tocable el nombre en `CheckRow` (`onOpen`, rol de botón y «Ver detalle de…»). En la fase 1 el nombre no es tocable, para no tener zonas que no respondan.
+- [ ] Fase 2: sumar «Agregar ítem» y el estado vacío («Esta lista no tiene ítems», con `EmptyState`) en Detalle de lista. En la fase 1 no se muestran porque todavía no se pueden crear ítems.
+- [ ] Fase 3: al verificar, usar la validez predeterminada de cada ítem, no la validez fija de la fase 1 («hasta mañana 06:00»). En el ejemplo, «Alarma puesta» tiene que volver a «sin vencimiento» al verificarla de nuevo.

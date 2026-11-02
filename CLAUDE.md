@@ -111,7 +111,8 @@ Nunca solo el camino feliz. Cada pantalla contempla carga, vacío, éxito, error
 ## Performance
 
 - Listas con `FlatList` (o equivalente virtualizado), nunca `map` sobre listas largas.
-- Evitar renders innecesarios; memoizar solo donde se mida un problema.
+- Evitar renders innecesarios. El React Compiler está activado: no se escriben `useMemo`, `useCallback` ni `memo` a mano salvo un problema medido.
+- Con el React Compiler, los shared values de Reanimated se usan con `.get()` y `.set()`, nunca con `.value`.
 - Animaciones en el hilo nativo (Reanimated, que viene con Expo).
 
 ## Testing
@@ -125,6 +126,7 @@ Nunca solo el camino feliz. Cada pantalla contempla carga, vacío, éxito, error
 
 - Ramas: `feature/<nombre-en-ingles>` o `fix/<nombre-en-ingles>`. Nunca trabajar directo sobre `main`.
 - Commits en español, simples y descriptivos: «Diseño base, primeros componentes», «Fix de alerta de vencimiento». Proponé el mensaje y esperá confirmación.
+- Los commits y los PR no llevan la línea Co-Authored-By ni ninguna firma de Claude.
 - Un PR por tarea o fase, con descripción de qué cambia y cómo probarlo.
 - La GitHub Action corre linter, tipos y tests en cada PR.
 

@@ -1,0 +1,7 @@
+# Markdown is edited by hand and only on request: Prettier must not rewrite it.
+*.md
+
+package-lock.json
+assets/
+dist/
+.expo/
